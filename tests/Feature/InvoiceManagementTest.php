@@ -287,3 +287,22 @@ test('invoice search matches number and client and status filtering works', func
         ->assertSee('Other Client')
         ->assertDontSee('Northstar Arts');
 });
+
+test('invoice status indicators use a distinct dot color per status', function () {
+    $this->actingAs(User::factory()->create());
+
+    collect([
+        [InvoiceStatus::Draft, 'bg-zinc-400'],
+        [InvoiceStatus::Sent, 'bg-sky'],
+        [InvoiceStatus::Paid, 'bg-emerald-500'],
+        [InvoiceStatus::Void, 'bg-zinc-300'],
+    ])->each(function (array $pair) {
+        [$status, $color] = $pair;
+
+        Invoice::factory()->create(['status' => $status]);
+
+        Livewire::test('pages::invoices.index')
+            ->assertSee($color, false)
+            ->assertSee($status->label());
+    });
+});

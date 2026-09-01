@@ -89,7 +89,15 @@ new #[Title('Invoices')] class extends Component {
                             <td class="px-5 py-5 text-sm text-zinc-600 dark:text-zinc-400">{{ $invoice->invoice_date->format('M j, Y') }}</td>
                             <td class="px-5 py-5 text-sm text-zinc-600 dark:text-zinc-400">{{ $invoice->due_date->format('M j, Y') }}</td>
                             <td class="px-5 py-5">
-                                <span class="inline-flex items-center gap-2 text-sm"><span class="bg-sky size-1.5 rounded-full"></span>{{ $invoice->status->label() }}</span>
+                                <span class="inline-flex items-center gap-2 text-sm">
+                                    @php($statusColor = match ($invoice->status) {
+                                        InvoiceStatus::Paid => 'bg-emerald-500',
+                                        InvoiceStatus::Sent => 'bg-sky',
+                                        InvoiceStatus::Void => 'bg-zinc-300',
+                                        default => 'bg-zinc-400',
+                                    })
+                                    <span class="{{ $statusColor }} size-1.5 rounded-full"></span>{{ $invoice->status->label() }}
+                                </span>
                             </td>
                             <td class="py-5 pl-5 text-right font-semibold tabular-nums">${{ number_format((float) $invoice->total, 2) }}</td>
                         </tr>
