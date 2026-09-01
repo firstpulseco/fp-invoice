@@ -169,6 +169,7 @@ test('invoice preview displays each snapshotted payment method', function () {
 
     $this->get(route('invoices.show', $invoice))
         ->assertSee('invoice-sheet text-ink mx-auto min-h-[11in] w-full max-w-[8.5in] bg-white', escape: false)
+        ->assertSee('pr-1 text-right', escape: false)
         ->assertSee('border-b border-zinc-300 py-4', escape: false)
         ->assertSee('break-words text-balance', escape: false)
         ->assertDontSee('text-pretty', escape: false)

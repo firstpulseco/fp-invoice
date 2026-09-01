@@ -68,6 +68,10 @@
 @media print {
     html,
     body {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
         background: #fff !important;
     }
 
@@ -85,6 +89,7 @@
     }
 
     .invoice-preview-shell {
+        width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #fff !important;
@@ -92,7 +97,7 @@
 
     .invoice-sheet {
         box-sizing: border-box !important;
-        width: auto !important;
+        width: 100% !important;
         max-width: none !important;
         min-height: auto !important;
         padding: 0 !important;

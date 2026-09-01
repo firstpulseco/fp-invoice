@@ -44,7 +44,7 @@ new #[Title('Invoice Preview')] class extends Component {
                     <p class="text-xl font-semibold">{{ $invoice->business_name ?: 'Your business' }}</p>
                 @endif
             </div>
-            <div class="text-right">
+            <div class="pr-1 text-right">
                 <p class="text-[0.65rem] font-semibold">Invoice</p>
                 <p class="mt-2 text-5xl font-medium tracking-[-0.06em]">#{{ $invoice->number }}</p>
             </div>
