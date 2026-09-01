@@ -95,8 +95,8 @@ new #[Title('Invoice Preview')] class extends Component {
                 @foreach ($invoice->items as $item)
                     <div wire:key="preview-item-{{ $item->id }}" class="invoice-service grid grid-cols-[minmax(0,1fr)_5.5rem_4.5rem_6.5rem] gap-4 border-b border-zinc-300 py-4">
                         <div>
-                            <p class="min-w-0 break-words text-pretty text-sm font-semibold hyphens-auto">{{ $item->description }}</p>
-                            @if ($item->details)<p class="mt-1 min-w-0 break-words text-pretty text-xs leading-4 text-zinc-600 hyphens-auto">{{ $item->details }}</p>@endif
+                            <p class="min-w-0 break-words text-balance text-sm font-semibold hyphens-none">{{ $item->description }}</p>
+                            @if ($item->details)<p class="mt-1 min-w-0 break-words text-balance text-xs leading-4 text-zinc-600 hyphens-none">{{ $item->details }}</p>@endif
                             @if ($item->pricing_type === PricingType::Fixed)<p class="mt-1.5 text-[0.62rem] font-semibold text-zinc-500">Fixed Price</p>@endif
                         </div>
                         <p class="text-right text-sm tabular-nums">{{ $item->pricing_type === PricingType::Hourly ? '$'.number_format((float) $item->hourly_rate, 2) : '—' }}</p>
