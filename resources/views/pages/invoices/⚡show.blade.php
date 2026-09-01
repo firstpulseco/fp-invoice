@@ -72,7 +72,7 @@ new #[Title('Invoice Preview')] class extends Component {
         <section class="grid grid-cols-2 gap-x-8 gap-y-8 py-8">
             <div>
                 <p class="invoice-kicker">Bill To</p>
-                <p class="mt-3 text-lg font-semibold">{{ $invoice->client_company_name }}</p>
+                <p class="mt-3 text-balance text-lg font-semibold">{{ $invoice->client_company_name }}</p>
                 <div class="mt-2 text-sm leading-5 text-zinc-700">
                     @if ($invoice->client_contact_name)<p>{{ $invoice->client_contact_name }}</p>@endif
                     @if ($invoice->client_street_address)<p>{{ $invoice->client_street_address }}</p>@endif

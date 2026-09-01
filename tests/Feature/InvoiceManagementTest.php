@@ -175,6 +175,7 @@ test('invoice preview displays each snapshotted payment method', function () {
         ->assertSee('border-b border-zinc-300 py-3', escape: false)
         ->assertSee('border-b-2 pb-7', escape: false)
         ->assertSee('gap-x-8 gap-y-8 py-8', escape: false)
+        ->assertSee('mt-3 text-balance text-lg font-semibold', escape: false)
         ->assertSee('invoice-payment border-ink mt-8', escape: false)
         ->assertSee('break-words text-balance', escape: false)
         ->assertDontSee('text-pretty', escape: false)
