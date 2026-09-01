@@ -74,10 +74,11 @@ test('default hourly rates require whole-dollar increments', function () {
 test('the shared mark uses the uploaded business logo', function () {
     Storage::fake('public');
     Storage::disk('public')->put('logos/brand.png', 'logo-contents');
-    BusinessSetting::factory()->create(['logo_path' => 'logos/brand.png']);
+    $settings = BusinessSetting::factory()->create(['logo_path' => 'logos/brand.png']);
+    $logoUrl = route('branding.logo', ['v' => $settings->updated_at->getTimestamp()]);
 
     $this->get(route('login'))
-        ->assertSee(route('branding.logo'), escape: false);
+        ->assertSee($logoUrl, escape: false);
 
     $this->get(route('branding.logo'))
         ->assertOk()

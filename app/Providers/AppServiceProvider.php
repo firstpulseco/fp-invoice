@@ -31,13 +31,16 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
 
         View::composer('components.app-mark', function (ViewInstance $view): void {
-            $logoPath = Schema::hasTable('business_settings')
-                ? BusinessSetting::query()->value('logo_path')
+            $settings = Schema::hasTable('business_settings')
+                ? BusinessSetting::query()->first(['logo_path', 'updated_at'])
                 : null;
 
-            $hasLogo = $logoPath && Storage::disk('public')->exists($logoPath);
+            $hasLogo = $settings?->logo_path && Storage::disk('public')->exists($settings->logo_path);
+            $logoUrl = $hasLogo
+                ? route('branding.logo', ['v' => $settings->updated_at?->getTimestamp()])
+                : null;
 
-            $view->with('businessLogoUrl', $hasLogo ? route('branding.logo') : null);
+            $view->with('businessLogoUrl', $logoUrl);
         });
 
         View::composer('partials.head', function (ViewInstance $view): void {

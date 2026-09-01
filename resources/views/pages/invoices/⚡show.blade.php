@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BusinessSetting;
 use App\Models\Invoice;
 use App\PricingType;
 use Illuminate\Support\Facades\Storage;
@@ -8,6 +9,7 @@ use Livewire\Component;
 
 new #[Title('Invoice Preview')] class extends Component {
     public Invoice $invoice;
+    public ?string $businessLogoUrl = null;
 
     /** @var array<int, array{name: string, details: string}> */
     public array $paymentMethods = [];
@@ -16,6 +18,13 @@ new #[Title('Invoice Preview')] class extends Component {
     {
         $this->invoice = $invoice->load('items');
         $this->paymentMethods = $invoice->payment_methods ?? [];
+        $settings = BusinessSetting::query()->first(['logo_path', 'updated_at']);
+
+        if ($settings?->logo_path && Storage::disk('public')->exists($settings->logo_path)) {
+            $this->businessLogoUrl = route('branding.logo', [
+                'v' => $settings->updated_at?->getTimestamp(),
+            ]);
+        }
 
         if (! $this->paymentMethods && ($invoice->payment_method_name || $invoice->payment_details)) {
             $this->paymentMethods = [[
@@ -38,8 +47,8 @@ new #[Title('Invoice Preview')] class extends Component {
     <article class="invoice-sheet text-ink mx-auto min-h-[11in] w-full max-w-[8.5in] bg-white px-[0.55in] py-[0.5in] shadow-xl sm:px-[0.72in] sm:py-[0.65in]">
         <header class="border-ink grid grid-cols-2 gap-10 border-b-2 pb-10">
             <div class="flex min-h-16 items-start">
-                @if ($invoice->business_logo_path)
-                    <img src="{{ Storage::url($invoice->business_logo_path) }}" alt="{{ $invoice->business_name }}" class="max-h-16 max-w-52 object-contain object-left" />
+                @if ($businessLogoUrl)
+                    <img src="{{ $businessLogoUrl }}" alt="{{ $invoice->business_name }}" class="max-h-16 max-w-52 object-contain object-left" />
                 @else
                     <p class="text-xl font-semibold">{{ $invoice->business_name ?: 'Your business' }}</p>
                 @endif

@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\User;
 use App\PricingType;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 test('guests are redirected to sign in and users land on invoices', function () {
@@ -182,6 +183,24 @@ test('invoice preview displays each snapshotted payment method', function () {
         ->assertSee('Account ending in 1234')
         ->assertSee('Check')
         ->assertSee('Mail to the studio');
+});
+
+test('invoice previews use the current business logo', function () {
+    $this->actingAs(User::factory()->create());
+    Storage::fake('public');
+    Storage::disk('public')->put('logos/current.png', 'current-logo');
+    $settings = BusinessSetting::factory()->create([
+        'logo_path' => 'logos/current.png',
+    ]);
+    $invoice = Invoice::factory()->create([
+        'business_name' => 'Archived Studio',
+        'business_logo_path' => 'logos/previous.png',
+    ]);
+    $logoUrl = route('branding.logo', ['v' => $settings->updated_at->getTimestamp()]);
+
+    $this->get(route('invoices.show', $invoice))
+        ->assertSee('src="'.$logoUrl.'" alt="Archived Studio"', escape: false)
+        ->assertDontSee('logos/previous.png', escape: false);
 });
 
 test('editing an invoice preserves its original client snapshot', function () {
