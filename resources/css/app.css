@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-mono: 'Ioskeley Mono', ui-monospace, monospace;
+    --font-sans: ui-sans-serif, system-ui, sans-serif;
+
+    --color-ink: #050607;
+    --color-slate: #1d303d;
+    --color-ice: #d9edf9;
+    --color-cloud: #f4faff;
+    --color-sky: #5ab6ee;
+    --color-breeze: #8fd1f5;
+    --color-ocean: #1674a9;
+    --color-navy: #12364b;
+
+    --color-zinc-50: var(--color-cloud);
+    --color-zinc-100: var(--color-cloud);
+    --color-zinc-200: var(--color-ice);
+    --color-zinc-300: var(--color-breeze);
+    --color-zinc-400: var(--color-sky);
+    --color-zinc-500: var(--color-ocean);
+    --color-zinc-600: var(--color-navy);
+    --color-zinc-700: var(--color-slate);
+    --color-zinc-800: var(--color-slate);
+    --color-zinc-900: var(--color-ink);
+    --color-zinc-950: var(--color-ink);
+
+    --color-accent: var(--color-ocean);
+    --color-accent-content: var(--color-ocean);
+    --color-accent-foreground: var(--color-cloud);
+}
+
+@layer theme {
+    .dark {
+        --color-accent: var(--color-sky);
+        --color-accent-content: var(--color-sky);
+        --color-accent-foreground: var(--color-ink);
+    }
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+.invoice-kicker {
+    @apply text-navy text-[0.62rem] font-semibold uppercase tracking-[0.2em];
+}
+
+@page {
+    size: 8.5in 11in;
+    margin: 0.55in 0.65in;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff !important;
+    }
+
+    body > ui-sidebar,
+    body > header,
+    .invoice-toolbar,
+    [data-flux-toast] {
+        display: none !important;
+    }
+
+    main,
+    [data-flux-main] {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .invoice-preview-shell {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    .invoice-sheet {
+        box-sizing: border-box !important;
+        width: auto !important;
+        max-width: none !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .invoice-service,
+    .invoice-payment,
+    .invoice-footer {
+        break-inside: avoid;
+    }
+}
+
+[data-flux-field]:not(ui-radio, ui-checkbox) {
+    @apply grid gap-2;
+}
+
+[data-flux-label] {
+    @apply  !mb-0 !leading-tight;
+}
+
+input:focus[data-flux-control],
+textarea:focus[data-flux-control],
+select:focus[data-flux-control] {
+    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+}
+
+/* \[:where(&)\]:size-4 {
+    @apply size-4;
+} */
