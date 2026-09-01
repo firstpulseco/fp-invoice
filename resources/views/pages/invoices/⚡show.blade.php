@@ -17,8 +17,13 @@ new #[Title('Invoice Preview')] class extends Component {
     public function mount(Invoice $invoice): void
     {
         $this->invoice = $invoice->load('items');
-        $this->paymentMethods = $invoice->payment_methods ?? [];
-        $settings = BusinessSetting::query()->first(['logo_path', 'updated_at']);
+        $settings = BusinessSetting::query()->first([
+            'logo_path',
+            'payment_method_name',
+            'payment_details',
+            'payment_methods',
+            'updated_at',
+        ]);
 
         if ($settings?->logo_path && Storage::disk('public')->exists($settings->logo_path)) {
             $this->businessLogoUrl = route('branding.logo', [
@@ -26,10 +31,15 @@ new #[Title('Invoice Preview')] class extends Component {
             ]);
         }
 
-        if (! $this->paymentMethods && ($invoice->payment_method_name || $invoice->payment_details)) {
+        $this->paymentMethods = $settings
+            ? ($settings->payment_methods ?? [])
+            : ($invoice->payment_methods ?? []);
+        $paymentSource = $settings ?? $invoice;
+
+        if (! $this->paymentMethods && ($paymentSource->payment_method_name || $paymentSource->payment_details)) {
             $this->paymentMethods = [[
-                'name' => $invoice->payment_method_name ?? '',
-                'details' => $invoice->payment_details ?? '',
+                'name' => $paymentSource->payment_method_name ?? '',
+                'details' => $paymentSource->payment_details ?? '',
             ]];
         }
     }

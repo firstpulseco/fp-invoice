@@ -139,7 +139,7 @@ new #[Title('Business Settings')] class extends Component {
     <header class="pb-8">
         <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">CONFIGURATION</p>
         <h1 class="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">Settings</h1>
-        <p class="mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400">These details appear on new invoices. Logo changes apply to every invoice; existing invoices keep their original billing and payment information.</p>
+        <p class="mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400">These details appear on new invoices. Logo and payment method changes apply to every invoice; existing invoices keep their original billing information.</p>
     </header>
 
     <form wire:submit="save" class="pt-10">

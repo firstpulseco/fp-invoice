@@ -30,12 +30,13 @@ test('invoice editor headings use title case', function () {
     $this->actingAs(User::factory()->create());
 
     $this->get(route('invoices.create'))
-        ->assertSee('New Invoice')
+        ->assertSee('NEW INVOICE')
+        ->assertSee('SERVICES')
         ->assertSee('Line Items')
-        ->assertSee('Invoice Total')
+        ->assertSee('INVOICE TOTAL')
         ->assertSee('step="1"', escape: false)
         ->assertDontSee('border-b border-zinc-300 pb-8', escape: false)
-        ->assertSeeInOrder(['Line Items', 'Description', 'Add Item', 'Invoice Total']);
+        ->assertSeeInOrder(['Line Items', 'Description', 'Add Item', 'INVOICE TOTAL']);
 });
 
 test('application eyebrow labels use uppercase', function () {
@@ -203,6 +204,28 @@ test('invoice previews use the current business logo', function () {
         ->assertDontSee('logos/previous.png', escape: false);
 });
 
+test('invoice previews use the current payment methods', function () {
+    $this->actingAs(User::factory()->create());
+    BusinessSetting::factory()->create([
+        'payment_method_name' => 'Zelle',
+        'payment_details' => 'ID: firstpulse',
+        'payment_methods' => [
+            ['name' => 'Zelle', 'details' => 'ID: firstpulse'],
+        ],
+    ]);
+    $invoice = Invoice::factory()->create([
+        'payment_method_name' => 'Zelle',
+        'payment_details' => 'Zelle ID: firstpulse',
+        'payment_methods' => [
+            ['name' => 'Zelle', 'details' => 'Zelle ID: firstpulse'],
+        ],
+    ]);
+
+    $this->get(route('invoices.show', $invoice))
+        ->assertSee('ID: firstpulse')
+        ->assertDontSee('Zelle ID: firstpulse');
+});
+
 test('editing an invoice preserves its original client snapshot', function () {
     $this->actingAs(User::factory()->create());
     $client = Client::factory()->create([
@@ -226,6 +249,7 @@ test('editing an invoice preserves its original client snapshot', function () {
     ]);
 
     Livewire::test('pages::invoices.form', ['invoice' => $invoice])
+        ->assertSee('EDIT INVOICE')
         ->set('status', InvoiceStatus::Paid->value)
         ->call('save')
         ->assertHasNoErrors();

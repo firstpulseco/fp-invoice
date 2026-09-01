@@ -261,7 +261,7 @@ new #[Title('Invoice Editor')] class extends Component {
 <div class="mx-auto w-full max-w-7xl py-6 sm:py-10">
     <header class="flex flex-col gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="mb-3 text-xs font-semibold tracking-[0.2em] text-zinc-500">{{ $invoice ? 'Edit Invoice' : 'New Invoice' }}</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">{{ $invoice ? 'EDIT INVOICE' : 'NEW INVOICE' }}</p>
             <h1 class="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">Invoice #{{ $number }}</h1>
         </div>
         <a href="{{ $invoice ? route('invoices.show', $invoice) : route('invoices.index') }}" wire:navigate class="text-sm font-medium underline decoration-zinc-400 underline-offset-4">Cancel</a>
@@ -294,7 +294,7 @@ new #[Title('Invoice Editor')] class extends Component {
 
         <section class="mt-10">
             <div class="border-b-2 border-zinc-950 pb-4 dark:border-white">
-                <p class="text-xs font-semibold tracking-[0.2em] text-zinc-500">Services</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">SERVICES</p>
                 <h2 class="mt-2 text-2xl font-medium tracking-tight">Line Items</h2>
             </div>
 
@@ -334,7 +334,7 @@ new #[Title('Invoice Editor')] class extends Component {
 
         <section class="flex justify-end border-t-2 border-zinc-950 py-8 dark:border-white">
             <div class="flex w-full max-w-md items-baseline justify-between">
-                <span class="text-sm font-semibold tracking-[0.16em] text-zinc-500">Invoice Total</span>
+                <span class="text-sm font-semibold uppercase tracking-[0.16em] text-zinc-500">INVOICE TOTAL</span>
                 <span class="text-4xl font-medium tracking-[-0.04em] tabular-nums">${{ number_format($this->total, 2) }}</span>
             </div>
         </section>
