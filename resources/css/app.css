@@ -20,6 +20,8 @@
     --color-breeze: #8fd1f5;
     --color-ocean: #1674a9;
     --color-navy: #12364b;
+    --color-paid: #5f9f7a;
+    --color-void: #c86f6f;
 
     --color-zinc-50: var(--color-cloud);
     --color-zinc-100: var(--color-cloud);

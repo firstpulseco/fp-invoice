@@ -292,10 +292,10 @@ test('invoice status indicators use a distinct dot color per status', function (
     $this->actingAs(User::factory()->create());
 
     collect([
-        [InvoiceStatus::Draft, 'bg-zinc-400'],
-        [InvoiceStatus::Sent, 'bg-sky'],
-        [InvoiceStatus::Paid, 'bg-emerald-500'],
-        [InvoiceStatus::Void, 'bg-zinc-300'],
+        [InvoiceStatus::Draft, 'bg-slate'],
+        [InvoiceStatus::Sent, 'bg-ocean'],
+        [InvoiceStatus::Paid, 'bg-paid'],
+        [InvoiceStatus::Void, 'bg-void'],
     ])->each(function (array $pair) {
         [$status, $color] = $pair;
 

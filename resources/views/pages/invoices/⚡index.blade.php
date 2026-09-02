@@ -60,7 +60,7 @@ new #[Title('Invoices')] class extends Component {
 
     @if ($this->invoices->isEmpty())
         <section class="border-y border-zinc-300 py-20 dark:border-zinc-700">
-            <p class="text-2xl font-medium tracking-tight">{{ $search || $status ? 'No Invoices Match Those Filters.' : 'Your First Invoice Starts Here.' }}</p>
+            <p class="text-2xl font-medium tracking-tight">{{ $search || $status ? 'No invoices match those filters.' : 'Your first invoice starts here.' }}</p>
             <p class="mt-3 max-w-lg text-zinc-500">Create a clear, polished invoice and let the application handle the calculations.</p>
             @unless ($search || $status)
                 <flux:button :href="route('invoices.create')" variant="outline" class="mt-7" wire:navigate>Create an invoice</flux:button>
@@ -91,10 +91,10 @@ new #[Title('Invoices')] class extends Component {
                             <td class="px-5 py-5">
                                 <span class="inline-flex items-center gap-2 text-sm">
                                     @php($statusColor = match ($invoice->status) {
-                                        InvoiceStatus::Paid => 'bg-emerald-500',
-                                        InvoiceStatus::Sent => 'bg-sky',
-                                        InvoiceStatus::Void => 'bg-zinc-300',
-                                        default => 'bg-zinc-400',
+                                        InvoiceStatus::Paid => 'bg-paid',
+                                        InvoiceStatus::Sent => 'bg-ocean',
+                                        InvoiceStatus::Void => 'bg-void',
+                                        default => 'bg-slate',
                                     })
                                     <span class="{{ $statusColor }} size-1.5 rounded-full"></span>{{ $invoice->status->label() }}
                                 </span>
