@@ -16,11 +16,13 @@ class Invoice extends Model
     /** @use HasFactory<InvoiceFactory> */
     use HasFactory;
 
+    /** @return BelongsTo<Client, $this> */
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class)->withTrashed();
     }
 
+    /** @return HasMany<InvoiceItem, $this> */
     public function items(): HasMany
     {
         return $this->hasMany(InvoiceItem::class)->orderBy('position');

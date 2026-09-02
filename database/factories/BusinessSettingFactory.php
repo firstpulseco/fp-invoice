@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\BusinessSetting;
+use Faker\Provider\en_US\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class BusinessSettingFactory extends Factory
             'business_name' => fake()->company(),
             'street_address' => fake()->streetAddress(),
             'city' => fake()->city(),
-            'region' => fake()->stateAbbr(),
+            'region' => Address::stateAbbr(),
             'postal_code' => fake()->postcode(),
             'phone' => fake()->phoneNumber(),
             'email' => fake()->companyEmail(),

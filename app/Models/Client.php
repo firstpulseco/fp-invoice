@@ -15,6 +15,7 @@ class Client extends Model
     /** @use HasFactory<ClientFactory> */
     use HasFactory, SoftDeletes;
 
+    /** @return HasMany<Invoice, $this> */
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);

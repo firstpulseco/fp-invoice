@@ -15,6 +15,7 @@ class InvoiceItem extends Model
     /** @use HasFactory<InvoiceItemFactory> */
     use HasFactory;
 
+    /** @return BelongsTo<Invoice, $this> */
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);

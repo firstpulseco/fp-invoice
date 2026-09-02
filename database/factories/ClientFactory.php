@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
+use Faker\Provider\en_US\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,7 @@ class ClientFactory extends Factory
             'street_address' => fake()->streetAddress(),
             'address_line_2' => null,
             'city' => fake()->city(),
-            'region' => fake()->stateAbbr(),
+            'region' => Address::stateAbbr(),
             'postal_code' => fake()->postcode(),
         ];
     }
